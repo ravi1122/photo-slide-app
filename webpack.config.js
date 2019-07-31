@@ -2,6 +2,7 @@ const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const CWD = process.cwd();
 const SRC_DIR = path.join(CWD, 'src');
@@ -45,9 +46,16 @@ module.exports = {
         new HtmlWebPackPlugin({
             template: path.join(SRC_DIR, 'index.html'),
             filename: 'index.html'
-        })
+        }),
+        new CopyPlugin([
+            { from:  path.join(CWD, 'assets'), to:  path.join(CWD, 'build', 'assets') },            
+          ]),
     ],
     resolve: {
         extensions: ['*', '.js', '.jsx', '.css', '.scss', '.html']
-    }
+    },
+    // devServer: {
+    //     port: 5656,
+    //     publicPath: path.join(CWD, 'build')
+    // }
 }
